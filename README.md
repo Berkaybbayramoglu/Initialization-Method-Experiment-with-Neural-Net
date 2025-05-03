@@ -10,6 +10,7 @@ This repository explores the impact of different weight initialization technique
   - [Xavier Initialization + Tanh](#xavier-initialization--tanh)
   - [Bad Initialization + ReLU](#bad-initialization--relu)
   - [He Initialization + ReLU](#he-initialization--relu)
+  - [Lecun Initialization + Sigmoid](#lecun-initialization--sigmoid)
 - [Results](#results)
 - [Conclusion](#conclusion)
 - [License](#license)
@@ -24,6 +25,7 @@ We specifically compare the following combinations:
 - **Xavier Initialization + Tanh**
 - **Bad Initialization + ReLU**
 - **He Initialization + ReLU**
+- **Lecun Initialization + Sigmoid**
 
 By visualizing the mean and standard deviation at each layer as well as examining the activation distributions, we can assess how these combinations affect the network's learning dynamics.
 
@@ -97,6 +99,21 @@ def he_init(fan_in, fan_out):
 def relu(x):
     return np.maximum(0, x)  # ReLU activation function
 ```
+## Lecun Initialization + Sigmoid
+Lecun initialization scales the weights by the square root of 1 divided by the number of input units (sqrt(1. / fan_in)). It was proposed to work well with sigmoid-like activation functions, and this experiment explores its behavior with Sigmoid.
+
+**Code Snippet:**
+```bash
+import numpy as np
+
+def lecun_init(fan_in, fan_out):
+  return np.random.randn(fan_in, fan_out) * np.sqrt(1. / fan_in) # Lecun initialization
+
+def sigmoid(x):
+  return 1 / (1 + np.exp(-x)) # Sigmoid activation function
+```
+
+
 
 ## Results
 The following visualizations are generated for each experiment:
@@ -129,3 +146,26 @@ python experiment.py
 ```
 4. The script will generate plots of the layer-wise mean, standard deviation values, and activation distributions for each experiment. These plots will help you understand the effects of different weight initializations and activation functions on the training process.
 
+## License
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+Copyright (c) 2025 BERKAY BAYRAMOĞLU
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
